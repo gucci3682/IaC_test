@@ -1,0 +1,16 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  # - name: uninstall apache package
+  #   package:
+  #     name: httpd
+  #     state: absent 
+
+  - name: update package cache
+    package:
+      name: '*'
+      state: latest
+      
