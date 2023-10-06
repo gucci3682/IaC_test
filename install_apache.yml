@@ -9,8 +9,35 @@
   #     name: httpd
   #     state: absent 
 
-  - name: update package cache
-    package:
-      name: '*'
-      state: latest
+  # - name: update package cache
+  #   package:
+  #     name: '*'
+  #     state: latest
+  #   when: ansible_facts['distribution'] == "AlmaLinux"
+
+  # - name: Print all available facts  
+  #   debug:    
+  #     var: ansible_facts
+
+  - name: change line in file
+    tags: apache, httpd
+    lineinfile:
+      path: ./facts
+      regexp: "^boo"
+      line: haha
+    register: httpd
+
+  - name: restart httpd
+    tags: apache, httpd
+    service:
+      name: httpd
+      state: restarted
+    when: httpd.changed
+  
+  # - name: create simone user
+  #   tags: always
+  #   user:
+  #     name: simone
+  #     groups: root
+  
       
